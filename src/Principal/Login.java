@@ -5,13 +5,20 @@
  */
 package Principal;
 
-import Visao.Cadastrar.CadastrarUsuario;
+
+import DAO.Conexao;
+import DAO.UsuarioDAO;
+import java.sql.Connection;
+import javax.swing.JOptionPane;
+
 
 /**
  *
  * @author Vinicius de Almeida
  */
 public class Login extends javax.swing.JFrame {
+
+
 
     /**
      * Creates new form Login
@@ -36,10 +43,9 @@ public class Login extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jToggleButton1 = new javax.swing.JToggleButton();
+        tfUsuario = new javax.swing.JTextField();
         jToggleButton2 = new javax.swing.JToggleButton();
-        jPasswordField1 = new javax.swing.JPasswordField();
+        pfSenha = new javax.swing.JPasswordField();
         jProgressBar3 = new javax.swing.JProgressBar();
         jToggleButton3 = new javax.swing.JToggleButton();
         jLabel2 = new javax.swing.JLabel();
@@ -64,32 +70,40 @@ public class Login extends javax.swing.JFrame {
         jLabel3.setBounds(70, 150, 70, 20);
 
         jLabel4.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jLabel4.setText("Email:");
+        jLabel4.setText("Usuario:");
         getContentPane().add(jLabel4);
-        jLabel4.setBounds(70, 80, 60, 20);
-        getContentPane().add(jTextField2);
-        jTextField2.setBounds(70, 110, 330, 30);
+        jLabel4.setBounds(70, 80, 80, 20);
 
-        jToggleButton1.setBackground(new java.awt.Color(255, 102, 0));
-        jToggleButton1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jToggleButton1.setText("Cadastre");
-        jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
+        tfUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButton1ActionPerformed(evt);
+                tfUsuarioActionPerformed(evt);
             }
         });
-        getContentPane().add(jToggleButton1);
-        jToggleButton1.setBounds(300, 230, 100, 40);
+        getContentPane().add(tfUsuario);
+        tfUsuario.setBounds(70, 110, 330, 30);
 
         jToggleButton2.setBackground(new java.awt.Color(0, 255, 0));
         jToggleButton2.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jToggleButton2.setText("Entar");
+        jToggleButton2.setText("Entrar");
+        jToggleButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton2ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jToggleButton2);
-        jToggleButton2.setBounds(70, 230, 80, 40);
-        getContentPane().add(jPasswordField1);
-        jPasswordField1.setBounds(70, 180, 330, 30);
+        jToggleButton2.setBounds(110, 230, 80, 40);
+
+        pfSenha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pfSenhaActionPerformed(evt);
+            }
+        });
+        getContentPane().add(pfSenha);
+        pfSenha.setBounds(70, 180, 330, 30);
+
+        jProgressBar3.setForeground(new java.awt.Color(255, 0, 51));
         getContentPane().add(jProgressBar3);
-        jProgressBar3.setBounds(60, 340, 360, 14);
+        jProgressBar3.setBounds(40, 320, 390, 20);
 
         jToggleButton3.setBackground(new java.awt.Color(255, 0, 0));
         jToggleButton3.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
@@ -100,7 +114,7 @@ public class Login extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jToggleButton3);
-        jToggleButton3.setBounds(160, 230, 80, 40);
+        jToggleButton3.setBounds(270, 230, 80, 40);
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/01.png"))); // NOI18N
         getContentPane().add(jLabel2);
@@ -113,13 +127,55 @@ public class Login extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
 
-    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
-         new CadastrarUsuario().setVisible(true);
-    }//GEN-LAST:event_jToggleButton1ActionPerformed
-
     private void jToggleButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton3ActionPerformed
      System.exit(0);
     }//GEN-LAST:event_jToggleButton3ActionPerformed
+
+    private void jToggleButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton2ActionPerformed
+     Connection con = Conexao.AbrirConexao();
+        UsuarioDAO sql = new UsuarioDAO(con);
+        String login = tfUsuario.getText();
+        String senha = pfSenha.getText();
+        if (login.equalsIgnoreCase("")|| senha.equalsIgnoreCase("")){
+            JOptionPane.showMessageDialog(null, "Nenhum campo pode esta Vazio",
+                    "Loja de CDs", JOptionPane.WARNING_MESSAGE);
+            tfUsuario.setText("");
+            pfSenha.setText("");
+       }else{ 
+           
+            if (sql.Logar(login, senha) == true){
+                new Thread(){
+                 public void run() {
+                  for (int i = 0; i < 101; i++){
+                      jProgressBar3.setValue(i);
+                      try {
+                          Thread.sleep(35);
+                     } catch (Exception ex) {
+                         ex.getMessage();
+                     }
+                      }
+                  new Menu2().setVisible(true);
+                  dispose();
+                 }
+            }.start();
+       }else {
+          JOptionPane.showMessageDialog(null, "Usuário ou Senha Invalidos",      
+            "Loja de CDs", JOptionPane.ERROR_MESSAGE);
+           tfUsuario.setText("");
+           pfSenha.setText("");
+            }
+        }
+        
+
+    }//GEN-LAST:event_jToggleButton2ActionPerformed
+
+    private void tfUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfUsuarioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfUsuarioActionPerformed
+
+    private void pfSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pfSenhaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_pfSenhaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -161,14 +217,13 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JProgressBar jProgressBar2;
     private javax.swing.JProgressBar jProgressBar3;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JToggleButton jToggleButton2;
     private javax.swing.JToggleButton jToggleButton3;
+    private javax.swing.JPasswordField pfSenha;
+    private javax.swing.JTextField tfUsuario;
     // End of variables declaration//GEN-END:variables
 }
