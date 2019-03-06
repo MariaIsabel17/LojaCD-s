@@ -8,8 +8,9 @@ package Modelo;
 /**
  *
  * @author Vinicius de Almeida
- */
+ */ 
 public class cadastrarusu {
+    private int codigo;
     private String Nome;
     private String Email;
     private String Cpf;
@@ -17,13 +18,14 @@ public class cadastrarusu {
     private String Login;
     private String Senha;
     private String Senha2;
+  
     
     public String getNome() {
         return Nome;
     }
 
-    public void setNome(String nome) {
-        this.Nome = nome;
+    public void setNome(String Nome) {
+        this.Nome = Nome;
     }
     
     public String getEmail() {
@@ -73,7 +75,12 @@ public class cadastrarusu {
     public void setSenha2(String Senha2) {
         this.Senha2 = Senha2;
     }
-    
         
-    
+      public int getcodigo() {
+        return codigo;
+    }
+
+    public void setcodigo(int codigo ) {
+        this.codigo = codigo;
+    }
 }
