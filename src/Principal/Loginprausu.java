@@ -7,7 +7,8 @@ package Principal;
 
 
 import DAO.Conexao;
-import DAO.UsuarioDAO;
+import DAO.prausuDAO;
+import Visao.Cadastrar.Cadastrarusu;
 import java.sql.Connection;
 import javax.swing.JOptionPane;
 
@@ -16,14 +17,14 @@ import javax.swing.JOptionPane;
  *
  * @author Vinicius de Almeida
  */
-public class Login extends javax.swing.JFrame {
+public class Loginprausu extends javax.swing.JFrame {
 
 
 
     /**
      * Creates new form Login
      */
-    public Login() {
+    public Loginprausu() {
         initComponents();
         setSize(495, 400);
         setResizable(false);
@@ -49,7 +50,7 @@ public class Login extends javax.swing.JFrame {
         pfSenha = new javax.swing.JPasswordField();
         jProgressBar3 = new javax.swing.JProgressBar();
         jToggleButton3 = new javax.swing.JToggleButton();
-        jButton3 = new javax.swing.JButton();
+        jToggleButton4 = new javax.swing.JToggleButton();
         jLabel2 = new javax.swing.JLabel();
 
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
@@ -62,9 +63,9 @@ public class Login extends javax.swing.JFrame {
         getContentPane().setLayout(null);
 
         jLabel1.setFont(new java.awt.Font("Arial", 1, 36)); // NOI18N
-        jLabel1.setText("Login de Admin");
+        jLabel1.setText("Login");
         getContentPane().add(jLabel1);
-        jLabel1.setBounds(90, 10, 310, 40);
+        jLabel1.setBounds(170, 10, 110, 40);
 
         jLabel3.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel3.setText("Senha:");
@@ -105,29 +106,29 @@ public class Login extends javax.swing.JFrame {
 
         jProgressBar3.setForeground(new java.awt.Color(255, 0, 51));
         getContentPane().add(jProgressBar3);
-        jProgressBar3.setBounds(40, 320, 390, 20);
+        jProgressBar3.setBounds(50, 310, 370, 20);
 
-        jToggleButton3.setBackground(new java.awt.Color(255, 0, 0));
+        jToggleButton3.setBackground(new java.awt.Color(255, 153, 0));
         jToggleButton3.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jToggleButton3.setText("Sair");
+        jToggleButton3.setText("Cadastrar");
         jToggleButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jToggleButton3ActionPerformed(evt);
             }
         });
         getContentPane().add(jToggleButton3);
-        jToggleButton3.setBounds(320, 230, 80, 40);
+        jToggleButton3.setBounds(160, 230, 130, 40);
 
-        jButton3.setBackground(new java.awt.Color(0, 0, 204));
-        jButton3.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jButton3.setText("Voltar");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        jToggleButton4.setBackground(new java.awt.Color(255, 0, 0));
+        jToggleButton4.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jToggleButton4.setText("Sair");
+        jToggleButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                jToggleButton4ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton3);
-        jButton3.setBounds(190, 230, 90, 40);
+        getContentPane().add(jToggleButton4);
+        jToggleButton4.setBounds(320, 230, 80, 40);
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/01.png"))); // NOI18N
         getContentPane().add(jLabel2);
@@ -141,12 +142,13 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jToggleButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton3ActionPerformed
-     System.exit(0);
+       new Cadastrarusu().setVisible(true);
+        dispose();    
     }//GEN-LAST:event_jToggleButton3ActionPerformed
 
     private void jToggleButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton2ActionPerformed
      Connection con = Conexao.AbrirConexao();
-        UsuarioDAO sql = new UsuarioDAO(con);
+       prausuDAO sql = new prausuDAO(con);
         String login = tfUsuario.getText();
         String senha = pfSenha.getText();
         if (login.equalsIgnoreCase("")|| senha.equalsIgnoreCase("")){
@@ -167,7 +169,7 @@ public class Login extends javax.swing.JFrame {
                          ex.getMessage();
                      }
                       }
-                  new Menu2().setVisible(true);
+                  new Menu().setVisible(true);
                   dispose();
                  }
             }.start();
@@ -190,10 +192,9 @@ public class Login extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_pfSenhaActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        new Loginprausu().setVisible(true);
-        dispose();
-    }//GEN-LAST:event_jButton3ActionPerformed
+    private void jToggleButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton4ActionPerformed
+      System.exit(0);
+    }//GEN-LAST:event_jToggleButton4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -212,26 +213,26 @@ public class Login extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Loginprausu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Loginprausu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Loginprausu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Loginprausu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Login().setVisible(true);
+                new Loginprausu().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -242,6 +243,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField1;
     private javax.swing.JToggleButton jToggleButton2;
     private javax.swing.JToggleButton jToggleButton3;
+    private javax.swing.JToggleButton jToggleButton4;
     private javax.swing.JPasswordField pfSenha;
     private javax.swing.JTextField tfUsuario;
     // End of variables declaration//GEN-END:variables

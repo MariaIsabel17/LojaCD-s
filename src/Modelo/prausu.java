@@ -9,11 +9,7 @@ package Modelo;
  *
  * @author Vinicius de Almeida
  */
-public class Usuario {
-
-    public static void setText(String nome) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+public class prausu {
     
     private int id;
     private String Login;
@@ -48,10 +44,6 @@ public class Usuario {
     }
 
     public void setUsuario(String string) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    public String getOnline() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

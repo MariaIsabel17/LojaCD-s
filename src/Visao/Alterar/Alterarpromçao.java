@@ -6,6 +6,7 @@
 package Visao.Alterar;
 
 import Principal.Menu;
+import Principal.Menu2;
 
 /**
  *
@@ -19,6 +20,7 @@ public class Alterarpromçao extends javax.swing.JFrame {
     public Alterarpromçao() {
         initComponents();
         setSize(500, 400);
+        setResizable(false);
     }
 
     /**
@@ -72,7 +74,7 @@ public class Alterarpromçao extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jToggleButton3);
-        jToggleButton3.setBounds(220, 300, 90, 50);
+        jToggleButton3.setBounds(230, 300, 90, 50);
         getContentPane().add(jTextField1);
         jTextField1.setBounds(60, 230, 270, 30);
 
@@ -89,7 +91,7 @@ public class Alterarpromçao extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jToggleButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton3ActionPerformed
-        new Menu().setVisible(true);
+        new Menu2().setVisible(true);
         dispose();
     }//GEN-LAST:event_jToggleButton3ActionPerformed
 

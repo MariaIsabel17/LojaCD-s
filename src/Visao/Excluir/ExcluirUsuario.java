@@ -5,20 +5,28 @@
  */
 package Visao.Excluir;
 
-import Principal.Menu;
+import DAO.CadastrarusuDAO;
+import DAO.Conexao;
+import Modelo.cadastrarusu;
+
+import Principal.Menu2;
+import Visao.Cadastrar.Cadastrarusu;
+import java.sql.Connection;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Vinicius de Almeida
  */
-public class ExcluirUsario extends javax.swing.JFrame {
+public class ExcluirUsuario extends javax.swing.JFrame {
 
     /**
      * Creates new form ExcluirUsario
      */
-    public ExcluirUsario() {
+    public ExcluirUsuario() {
         initComponents();
-        setSize(500, 422);
+        setSize(500, 400);
+        setResizable(false);
     }
 
     /**
@@ -40,21 +48,11 @@ public class ExcluirUsario extends javax.swing.JFrame {
         jTextField7 = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
-        jTextField6 = new javax.swing.JTextField();
+        w = new javax.swing.JTextField();
+        nome = new javax.swing.JTextField();
         jToggleButton2 = new javax.swing.JToggleButton();
         jToggleButton3 = new javax.swing.JToggleButton();
-        jLabel10 = new javax.swing.JLabel();
-        jTextField8 = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
 
         jLabel2.setFont(new java.awt.Font("Arial", 1, 36)); // NOI18N
@@ -99,51 +97,27 @@ public class ExcluirUsario extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel4.setText("NOME");
         getContentPane().add(jLabel4);
-        jLabel4.setBounds(60, 110, 60, 22);
-
-        jLabel5.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jLabel5.setText("EMAIL");
-        getContentPane().add(jLabel5);
-        jLabel5.setBounds(60, 250, 60, 22);
-
-        jLabel6.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jLabel6.setText("CPF");
-        getContentPane().add(jLabel6);
-        jLabel6.setBounds(80, 210, 40, 20);
-
-        jLabel7.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel7.setText("TELEFONE");
-        getContentPane().add(jLabel7);
-        jLabel7.setBounds(20, 160, 100, 22);
-
-        jLabel8.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jLabel8.setText("Senha:");
-        getContentPane().add(jLabel8);
-        jLabel8.setBounds(250, 300, 70, 22);
+        jLabel4.setBounds(40, 110, 60, 22);
 
         jLabel9.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel9.setText("CÓDIGO DO USUARIO");
         getContentPane().add(jLabel9);
         jLabel9.setBounds(40, 70, 193, 22);
-        getContentPane().add(jTextField1);
-        jTextField1.setBounds(320, 300, 150, 30);
-        getContentPane().add(jTextField2);
-        jTextField2.setBounds(240, 70, 180, 30);
-        getContentPane().add(jTextField3);
-        jTextField3.setBounds(130, 110, 290, 30);
-        getContentPane().add(jTextField4);
-        jTextField4.setBounds(130, 160, 290, 30);
-        getContentPane().add(jTextField5);
-        jTextField5.setBounds(130, 200, 290, 30);
-        getContentPane().add(jTextField6);
-        jTextField6.setBounds(130, 250, 290, 30);
+        getContentPane().add(w);
+        w.setBounds(240, 70, 190, 30);
+        getContentPane().add(nome);
+        nome.setBounds(110, 110, 320, 30);
 
         jToggleButton2.setBackground(new java.awt.Color(0, 255, 0));
         jToggleButton2.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jToggleButton2.setText("Excluir");
+        jToggleButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton2ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jToggleButton2);
-        jToggleButton2.setBounds(50, 340, 100, 40);
+        jToggleButton2.setBounds(90, 220, 100, 40);
 
         jToggleButton3.setBackground(new java.awt.Color(0, 51, 255));
         jToggleButton3.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
@@ -154,14 +128,7 @@ public class ExcluirUsario extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jToggleButton3);
-        jToggleButton3.setBounds(180, 340, 80, 40);
-
-        jLabel10.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jLabel10.setText("LOGIN");
-        getContentPane().add(jLabel10);
-        jLabel10.setBounds(20, 300, 60, 22);
-        getContentPane().add(jTextField8);
-        jTextField8.setBounds(90, 300, 150, 30);
+        jToggleButton3.setBounds(300, 220, 80, 40);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/04.jpg"))); // NOI18N
         getContentPane().add(jLabel1);
@@ -179,9 +146,39 @@ public class ExcluirUsario extends javax.swing.JFrame {
     }//GEN-LAST:event_tfemailActionPerformed
 
     private void jToggleButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton3ActionPerformed
-       new Menu().setVisible(true);
+       new Menu2().setVisible(true);
        dispose();
     }//GEN-LAST:event_jToggleButton3ActionPerformed
+
+    private void jToggleButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton2ActionPerformed
+
+               
+   String codi = w.getText();
+   String Nome = nome.getText();
+   
+   
+     Connection con = Conexao.AbrirConexao();
+     CadastrarusuDAO sql = new CadastrarusuDAO(con);
+     cadastrarusu a = new cadastrarusu();
+    if(codi.equals("")){
+    }else{
+    JOptionPane.showMessageDialog(null, "Deseja realmente excluir o usuario (" +Nome+")?","lojadecd",JOptionPane.INFORMATION_MESSAGE);
+   
+    int cod = Integer.parseInt(codi);
+    
+    
+    a.setcodigo(cod);
+    
+
+    sql.Inserir_ExcluirUsuario(a);
+    
+    Conexao.FecharConexao(con);
+    new ExcluirUsuario().setVisible(true);
+        dispose();
+}
+        
+        
+    }//GEN-LAST:event_jToggleButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -200,50 +197,41 @@ public class ExcluirUsario extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ExcluirUsario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ExcluirUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ExcluirUsario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ExcluirUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ExcluirUsario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ExcluirUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ExcluirUsario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ExcluirUsuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ExcluirUsario().setVisible(true);
+                new ExcluirUsuario().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
     private javax.swing.JToggleButton jToggleButton2;
     private javax.swing.JToggleButton jToggleButton3;
+    private javax.swing.JTextField nome;
     private javax.swing.JTextField tdcod;
     private javax.swing.JTextField tfcpf;
     private javax.swing.JTextField tfemail;
     private javax.swing.JTextField tflogin;
     private javax.swing.JTextField tfnome;
     private javax.swing.JTextField tftelefone;
+    private javax.swing.JTextField w;
     // End of variables declaration//GEN-END:variables
 }

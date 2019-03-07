@@ -6,6 +6,14 @@
 package Visao.Cadastrar;
 
 import Principal.Menu;
+import Principal.Menu2;
+
+import DAO.MusicaDAO;
+import DAO.Conexao;
+import java.sql.Connection;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import Modelo.Musica;
 
 /**
  *
@@ -19,6 +27,7 @@ public class Cadastrarmusica extends javax.swing.JFrame {
     public Cadastrarmusica() {
         initComponents();
         setSize(500, 425);
+        setResizable(false);
     }
 
     /**
@@ -35,10 +44,10 @@ public class Cadastrarmusica extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
+        Genero = new javax.swing.JTextField();
+        Nome = new javax.swing.JTextField();
+        Dura = new javax.swing.JTextField();
+        Compo = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         jTextField5 = new javax.swing.JTextField();
         jToggleButton2 = new javax.swing.JToggleButton();
@@ -72,14 +81,14 @@ public class Cadastrarmusica extends javax.swing.JFrame {
         jLabel7.setText("compositor:");
         getContentPane().add(jLabel7);
         jLabel7.setBounds(70, 200, 120, 20);
-        getContentPane().add(jTextField1);
-        jTextField1.setBounds(70, 300, 300, 30);
-        getContentPane().add(jTextField2);
-        jTextField2.setBounds(70, 90, 300, 30);
-        getContentPane().add(jTextField3);
-        jTextField3.setBounds(70, 160, 300, 30);
-        getContentPane().add(jTextField4);
-        jTextField4.setBounds(70, 230, 300, 30);
+        getContentPane().add(Genero);
+        Genero.setBounds(70, 300, 300, 30);
+        getContentPane().add(Nome);
+        Nome.setBounds(70, 90, 300, 30);
+        getContentPane().add(Dura);
+        Dura.setBounds(70, 160, 300, 30);
+        getContentPane().add(Compo);
+        Compo.setBounds(70, 230, 300, 30);
 
         jLabel8.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel8.setText("Nome:");
@@ -91,6 +100,11 @@ public class Cadastrarmusica extends javax.swing.JFrame {
         jToggleButton2.setBackground(new java.awt.Color(0, 255, 0));
         jToggleButton2.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jToggleButton2.setText("Cadastrar");
+        jToggleButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton2ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jToggleButton2);
         jToggleButton2.setBounds(70, 340, 120, 40);
 
@@ -113,9 +127,42 @@ public class Cadastrarmusica extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jToggleButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton3ActionPerformed
-          new Menu().setVisible(true);
+          new Menu2().setVisible(true);
           dispose();
     }//GEN-LAST:event_jToggleButton3ActionPerformed
+
+    private void jToggleButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton2ActionPerformed
+          
+       String nome = Nome.getText();
+       String dura = Dura.getText();
+       String compo = Compo.getText();
+       String genero = Genero.getText();
+       
+       if (Nome.equals("")|| Dura.equals("") || Compo.equals("") || Genero.equals("")){
+           JOptionPane.showMessageDialog(null, "nenhum campo pode estar vazio", 
+                   "Loja de CDs", JOptionPane.WARNING_MESSAGE);
+       
+       } else {
+       Connection con = Conexao.AbrirConexao();
+       MusicaDAO sql = new MusicaDAO(con);
+       Musica a = new Musica();
+       
+       a.setNome(nome);
+       a.setDura(dura);
+       a.setCompo(compo);
+       a.setGenero(genero);
+       
+       sql.Inserir_Cadastrarmusica(a);
+       Conexao.FecharConexao(con);
+       
+       Nome.setText("");
+       Dura.setText("");
+       Compo.setText("");
+       Genero.setText("");
+       JOptionPane.showMessageDialog(null,"Cadastro realizado com sucesso", "Loja de CDs", JOptionPane.INFORMATION_MESSAGE)
+;
+       }
+    }                                              
 
     /**
      * @param args the command line arguments
@@ -150,10 +197,15 @@ public class Cadastrarmusica extends javax.swing.JFrame {
             public void run() {
                 new Cadastrarmusica().setVisible(true);
             }
-        });
-    }
+        });    
+
+    }//GEN-LAST:event_jToggleButton2ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField Compo;
+    private javax.swing.JTextField Dura;
+    private javax.swing.JTextField Genero;
+    private javax.swing.JTextField Nome;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
@@ -161,10 +213,6 @@ public class Cadastrarmusica extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
     private javax.swing.JToggleButton jToggleButton2;
     private javax.swing.JToggleButton jToggleButton3;

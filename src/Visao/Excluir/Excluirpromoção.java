@@ -6,6 +6,7 @@
 package Visao.Excluir;
 
 import Principal.Menu;
+import Principal.Menu2;
 
 /**
  *
@@ -19,6 +20,7 @@ public class Excluirpromoção extends javax.swing.JFrame {
     public Excluirpromoção() {
         initComponents();
         setSize(620, 410);
+        setResizable(false);
     }
 
     /**
@@ -113,7 +115,7 @@ public class Excluirpromoção extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jToggleButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton2ActionPerformed
-       new Menu().setVisible(true);
+       new Menu2().setVisible(true);
        dispose();
     }//GEN-LAST:event_jToggleButton2ActionPerformed
 

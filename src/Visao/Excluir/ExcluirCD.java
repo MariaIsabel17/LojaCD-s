@@ -5,7 +5,12 @@
  */
 package Visao.Excluir;
 
-import Principal.Menu;
+import DAO.CDDAO;
+import DAO.Conexao;
+import Modelo.CD;
+import Principal.Menu2;
+import java.sql.Connection;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -19,6 +24,8 @@ public class ExcluirCD extends javax.swing.JFrame {
     public ExcluirCD() {
         initComponents();
         setSize(600, 420);
+        setResizable(false);
+        
     }
 
     /**
@@ -32,15 +39,11 @@ public class ExcluirCD extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        q = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        titulo = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
-        jLabel7 = new javax.swing.JLabel();
-        tfcapa = new javax.swing.JLabel();
+        preço = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
@@ -56,63 +59,46 @@ public class ExcluirCD extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel3.setText("Codigo do CD:");
         getContentPane().add(jLabel3);
-        jLabel3.setBounds(40, 80, 130, 22);
+        jLabel3.setBounds(30, 90, 130, 22);
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        q.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                qActionPerformed(evt);
             }
         });
-        getContentPane().add(jTextField1);
-        jTextField1.setBounds(170, 80, 110, 30);
+        getContentPane().add(q);
+        q.setBounds(160, 90, 130, 30);
 
         jLabel4.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel4.setText("Titulo:");
         getContentPane().add(jLabel4);
-        jLabel4.setBounds(300, 80, 80, 22);
+        jLabel4.setBounds(40, 160, 80, 22);
 
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        titulo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                tituloActionPerformed(evt);
             }
         });
-        getContentPane().add(jTextField2);
-        jTextField2.setBounds(360, 80, 220, 30);
-
-        jLabel5.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jLabel5.setText("Situação:");
-        getContentPane().add(jLabel5);
-        jLabel5.setBounds(40, 120, 90, 22);
-
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jTextField3);
-        jTextField3.setBounds(130, 120, 160, 30);
+        getContentPane().add(titulo);
+        titulo.setBounds(120, 150, 380, 30);
 
         jLabel6.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel6.setText("Preço:");
         getContentPane().add(jLabel6);
-        jLabel6.setBounds(300, 120, 60, 22);
-        getContentPane().add(jTextField4);
-        jTextField4.setBounds(360, 120, 100, 30);
-
-        jLabel7.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jLabel7.setText("Capa do CD");
-        getContentPane().add(jLabel7);
-        jLabel7.setBounds(430, 150, 120, 22);
-
-        tfcapa.setBorder(javax.swing.BorderFactory.createCompoundBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED), javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0))));
-        getContentPane().add(tfcapa);
-        tfcapa.setBounds(410, 180, 160, 190);
+        jLabel6.setBounds(50, 200, 60, 22);
+        getContentPane().add(preço);
+        preço.setBounds(120, 200, 380, 30);
 
         jButton1.setBackground(new java.awt.Color(51, 255, 0));
         jButton1.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jButton1.setText("Excluir");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton1);
-        jButton1.setBounds(40, 330, 100, 31);
+        jButton1.setBounds(90, 320, 100, 31);
 
         jButton2.setBackground(new java.awt.Color(204, 0, 0));
         jButton2.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
@@ -123,7 +109,7 @@ public class ExcluirCD extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton2);
-        jButton2.setBounds(170, 330, 120, 31);
+        jButton2.setBounds(360, 320, 120, 31);
 
         jLabel2.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/05.jpg"))); // NOI18N
@@ -133,22 +119,46 @@ public class ExcluirCD extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
-
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
-
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
+    private void qActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_qActionPerformed
+        
+        
+    }//GEN-LAST:event_qActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        new Menu().setVisible(true);
+        new Menu2().setVisible(true);
         dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+       
+   String codi = q.getText();
+   String Titulo = titulo.getText();
+   String Preco = preço.getText();
+   
+     Connection con = Conexao.AbrirConexao();
+     CDDAO sql = new CDDAO(con);
+      CD a = new CD();
+    if(codi.equals("")){
+    }else{
+    JOptionPane.showMessageDialog(null, "Deseja realmente excluir o cd (" +Titulo+", "+Preco+" )?","lojadecd",JOptionPane.INFORMATION_MESSAGE);
+   
+    int cod = Integer.parseInt(codi);
+    
+    
+    a.setcodigo(cod);
+    
+
+    sql.Inserir_ExcluirCD(a);
+    
+    Conexao.FecharConexao(con);
+    new ExcluirCD().setVisible(true);
+        dispose();
+}
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void tituloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tituloActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tituloActionPerformed
 
     /**
      * @param args the command line arguments
@@ -192,13 +202,9 @@ public class ExcluirCD extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JLabel tfcapa;
+    private javax.swing.JTextField preço;
+    private javax.swing.JTextField q;
+    private javax.swing.JTextField titulo;
     // End of variables declaration//GEN-END:variables
 }
